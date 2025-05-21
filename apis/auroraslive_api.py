@@ -48,7 +48,7 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         data: which data from the ace module should be returned 'threeday'
         and 'probability' will be used in this app.
     """
-    logging.info('Running aurora_api_call function.')
+    logging.info('Running aurora_api_call.')
 
     params = {
         'type': 'ace',

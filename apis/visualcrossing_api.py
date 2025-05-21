@@ -48,6 +48,8 @@ def lunar_api_call(lat: float,
         include: specifies that the information should be given per day.
         elements: lists the desired lunar facts.
     """
+    logging.info('Running lunar_api_call.')
+
     location_date = str(lat) + ',' + str(lng) + '/' + \
         str(start_date) + '/' + str(end_date)
     params = {
@@ -92,6 +94,8 @@ def cloud_api_call(lat: float,
         elements: requests cloud cover predictions and datetime of cloud cover
         predictions.
     """
+    logging.info('Running cloud_api_call.')
+
     location_date = str(lat) + ',' + str(lng) + '/' + \
         str(start_date) + '/' + str(end_date)
     params = {

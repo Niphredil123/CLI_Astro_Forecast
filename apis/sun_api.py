@@ -38,6 +38,8 @@ def sun_api_call(lat: float, lng: float, day: date) -> dict | None:
     request. The API defaults to UTC time. For the purposes of this exercise,
     the timezone is set to Europe/London.
     """
+    logging.info('Running sun_api_call.')
+
     params = {
         'lat': lat,
         'lng': lng,
