@@ -46,6 +46,7 @@ def forecast_output(dates: list,
             aurora probability and one with a three-day forecast.
 
     """
+    logging.info('Running forecast_output.')
     if vc_forecasts is not None:
         lunar_forecast = vc_forecasts[0]
         cloud_forecast = vc_forecasts[1]
