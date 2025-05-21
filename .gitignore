@@ -178,3 +178,10 @@ cython_debug/
 
 # stargazing output file
 Stargazing_Forecast.txt
+
+# Log files
+logs/
+*.log
+
+# Config files with sensitive data
+config.ini
