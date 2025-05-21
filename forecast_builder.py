@@ -51,6 +51,8 @@ def sun_forecast_build(dates: list, user_lat: float, user_lng: float) -> dict:
     Returns:
         dict: A nested dictionary keyed by date with sun event times.
     """
+    logging.info('Running sun_forecast_build.')
+
     sun_forecast = {}
     for day in dates:
         # Running sun_api_call function to get sun and twilight times
@@ -104,6 +106,8 @@ def vc_forecast_build(vc_api_key: str,
         second dictionary is the cloud cover forecast keyed by date.
         None: in the case a user API key is not given, None is returned.
     """
+    logging.info('Running vc_forecast_build.')
+
     lunar_forecast = {}
     cloud_forecast = {}
     if vc_api_key != 'xxx':
@@ -178,6 +182,8 @@ def aurora_forecast_build(dates: list,
         the likelihood of seeing the aurora that evening, while the second
         gives a three-day probability forecast.
     """
+    logging.info('Running aurora_forecast_build.')
+
     aurora_prob = {}
     aurora_3day = {}
     # Running the aurora_api_call function to call the API and receive the
