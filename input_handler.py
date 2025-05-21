@@ -7,6 +7,16 @@ This file contains functions to collect user inputs.
 # Function that prints a how to message
 from utils.message_utils import api_key_how_to
 
+# Logging modules
+import logging
+from logger import logging_setup
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
+
 
 ###############################################################################
 # COLLECTING USER INPUT

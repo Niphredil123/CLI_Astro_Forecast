@@ -18,6 +18,16 @@ from apis.auroraslive_api import aurora_api_call
 from utils.datetime_utils import convert_to_24hr, reformat_iso8601
 from utils.data_utils import find_how_cloudy, find_moon_phase
 
+# Logging modules
+import logging
+from logger import logging_setup
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
+
 
 ###############################################################################
 # FORECAST BUILD FUNCTIONS

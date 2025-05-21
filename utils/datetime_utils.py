@@ -9,6 +9,16 @@ from datetime import date
 from datetime import datetime as dt
 from datetime import timedelta
 
+# Logging modules
+import logging
+from logger import logging_setup
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
+
 
 ###############################################################################
 # DEFINING FUNCTIONS

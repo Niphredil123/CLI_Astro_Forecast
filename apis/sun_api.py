@@ -10,11 +10,21 @@ from datetime import date
 # Importing requests to handle calling API urls.
 import requests
 
+# Logging modules
+import logging
+from logger import logging_setup
+
 
 ###############################################################################
 # VARIABLES
 ###############################################################################
 from config import SUN_API_URL
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
 
 
 ###############################################################################

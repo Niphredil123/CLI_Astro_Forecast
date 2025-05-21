@@ -8,11 +8,22 @@ This file contains the function to write the final forecast to a file.
 from datetime import datetime as dt
 from datetime import date
 
+# Logging modules
+import logging
+from logger import logging_setup
+
+
 ###############################################################################
 # VARIABLES
 ###############################################################################
 # define today
 today = date.today()
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
 
 
 ###############################################################################

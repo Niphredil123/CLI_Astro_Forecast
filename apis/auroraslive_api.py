@@ -8,11 +8,20 @@ Functions relating to the http://auroraslive.io API.
 # It may be necessary to pip install requests
 import requests
 
+# Logging modules
+import logging
+from logger import logging_setup
 
 ###############################################################################
 # VARIABLES
 ###############################################################################
 from config import AURORA_API_URL
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logging_setup()
 
 
 ###############################################################################
@@ -39,6 +48,8 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         data: which data from the ace module should be returned 'threeday'
         and 'probability' will be used in this app.
     """
+    logging.info('Running aurora_api_call function.')
+
     params = {
         'type': 'ace',
         'lat': lat,
