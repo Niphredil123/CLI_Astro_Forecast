@@ -50,26 +50,42 @@ def lunar_api_call(lat: float,
     """
     logging.info('Running lunar_api_call.')
 
-    location_date = str(lat) + ',' + str(lng) + '/' + \
-        str(start_date) + '/' + str(end_date)
+    location_date = str(lat) + ',' + str(lng) + '/' + str(start_date) + '/' \
+        + str(end_date)
     params = {
         'unitGroup': 'metric',
         'key': api_key,
         'include': 'days',
         'elements': 'datetime,moonphase,moonrise,moonset'
     }
-    response = requests.get(VC_API_URL + location_date,
-                            params=params, timeout=10)
-    # Checking request was successful by looking for status code 200 and
-    # returning the API response in a JSON format
-    if response.status_code == 200:
-        return response.json()
-    # 401 is unauthorised request
-    elif response.status_code == 401:
-        print('Your API key is invalid. You will not get a lunar or cloud'
-              'forecast.')
-        return None
-    # If the status code is not 200, the app will print that the API call was
+    try:
+        # Try to call Visual Crossing with the params and location/dat string
+        response = requests.get(VC_API_URL + location_date,
+                                params=params, timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.Timeout:
+        # Raise and log an exception if the connection times out.
+        logging.exception(f'{VC_API_URL} timed out')
+    except requests.exceptions.ConnectionError:
+        # Raise and log an exception for a connection error.
+        logging.exception(f'Failed to connect to {VC_API_URL}')
+    except requests.exceptions.HTTPError:
+        # Raise and log an exception if the status code is for 4xx or 5xx errors
+        logging.exception(f'{VC_API_URL} gave an unsuccessful status code')
+        # 401 is unauthorised request
+        if response.status_code == 401:
+            print('Your API key is invalid. You will not get a lunar or cloud'
+                  'forecast.')
+    except requests.exceptions.RequestException:
+        # Raise and log all other request exceptions.
+        logging.exception(f'An error occurred calling {VC_API_URL}')
+    else:
+        logging.debug(f'Lunar API response is: {response}')
+        # Checking request was successful by looking for status code 200 and
+        # returning the API response in a JSON format
+        if response.status_code == 200:
+            return response.json()
+    # If an error occurred, the app will print that the API call was
     # unsuccessful and return None
     print('An error occurred trying to call https://weather.visualcrossing.com '
           'for lunar info')
@@ -96,26 +112,42 @@ def cloud_api_call(lat: float,
     """
     logging.info('Running cloud_api_call.')
 
-    location_date = str(lat) + ',' + str(lng) + '/' + \
-        str(start_date) + '/' + str(end_date)
+    location_date = str(lat) + ',' + str(lng) + '/' + str(start_date) + '/' + \
+        str(end_date)
     params = {
         'unitGroup': 'metric',
         'key': api_key,
         'include': 'hours',
         'elements': 'datetime,cloudcover'
     }
-    response = requests.get(VC_API_URL + location_date,
-                            params=params, timeout=10)
-    # Checking request was successful by looking for status code 200 and
-    # returning the API response in a JSON format
-    if response.status_code == 200:
-        return response.json()
-    # 401 is unauthorised request
-    elif response.status_code == 401:
-        print('Your API key is invalid. You will not get a moon or cloud '
-              'forecast.')
-        return None
-    # If the status code is not 200, the app will print that the API call was
+    try:
+        # Try to call Visual Crossing with the params and location/dat string
+        response = requests.get(VC_API_URL + location_date, params=params,
+                                timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.Timeout:
+        # Raise and log an exception if the connection times out.
+        logging.exception(f'{VC_API_URL} timed out')
+    except requests.exceptions.ConnectionError:
+        # Raise and log an exception for a connection error.
+        logging.exception(f'Failed to connect to {VC_API_URL}')
+    except requests.exceptions.HTTPError:
+        # Raise and log an exception if the status code is for 4xx or 5xx errors
+        logging.exception(f'{VC_API_URL} gave an unsuccessful status code')
+        # 401 is unauthorised request
+        if response.status_code == 401:
+            print('Your API key is invalid. You will not get a lunar or cloud'
+                  'forecast.')
+    except requests.exceptions.RequestException:
+        # Raise and log all other request exceptions.
+        logging.exception(f'An error occurred calling {VC_API_URL}')
+    else:
+        logging.debug(f'Cloud API response is: {response}')
+        # Checking request was successful by looking for status code 200 and
+        # returning the API response in a JSON format
+        if response.status_code == 200:
+            return response.json()
+    # If an error occurred, the app will print that the API call was
     # unsuccessful and return None
     print('An error occurred trying to call https://weather.visualcrossing.com '
           'for cloud info')
