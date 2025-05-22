@@ -63,7 +63,7 @@ def sun_api_call(lat: float, lng: float, day: date) -> dict | None:
         # Raise and log all other request exceptions.
         logging.exception(f'An error occurred calling {SUN_API_URL}')
     else:
-        logging.debug(f'Aurora API response is: {response}')
+        logging.debug(f'Sun API response is: {response}')
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:
