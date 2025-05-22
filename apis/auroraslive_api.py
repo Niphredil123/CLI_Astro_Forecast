@@ -57,12 +57,29 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         'tz': -60,
         'data': data
     }
-    response = requests.get(AURORA_API_URL, params=params, timeout=10)
-    # Checking request was successful by looking for status code 200 and
-    # returning the API response in a JSON format
-    if response.status_code == 200:
-        return response.json()
-    # If the status code is not 200, the app will print that the API call was
+    try:
+        # Trying to call the Aurora API using the params
+        response = requests.get(AURORA_API_URL, params=params, timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.Timeout:
+        # Raise and log an exception if the connection times out.
+        logging.exception(f'{AURORA_API_URL} timed out')
+    except requests.exceptions.ConnectionError:
+        # Raise and log an exception for a connection error.
+        logging.exception(f'Failed to connect to {AURORA_API_URL}')
+    except requests.exceptions.HTTPError:
+        # Raise and log an exception if the status code is for 4xx or 5xx errors
+        logging.exception(f'{AURORA_API_URL} gave an unsuccessful status code')
+    except requests.exceptions.RequestException:
+        # Raise and log all other request exceptions.
+        logging.exception(f'An error occurred calling {AURORA_API_URL}')
+    else:
+        logging.debug(f'Aurora API response is: {response}')
+        # Checking request was successful by looking for status code 200 and
+        # returning the API response in a JSON format
+        if response.status_code == 200:
+            return response.json()
+    # If an error occurred, the app will print that the API call was
     # unsuccessful and return None
     print('An error occurred trying to call auroraslive.io')
     return None
