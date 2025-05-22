@@ -9,12 +9,12 @@ import os
 ###############################################################################
 # CONFIGURE VARIABLES
 ###############################################################################
-# Folder name
-FOLDER_NAME = os.getcwd().split('\\')[-1]
-
-
+# Reading Config info from config.inial
 config = configparser.ConfigParser()
 config.read('config.ini')
+
+# Folder name
+FOLDER_NAME = os.getcwd().split('\\')[-1]
 
 # API urls
 SUN_API_URL = config['API']['SUN_API_URL']
