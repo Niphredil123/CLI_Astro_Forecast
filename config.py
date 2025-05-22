@@ -1,15 +1,22 @@
 ###############################################################################
 # IMPORTS
 ###############################################################################
+import configparser
+
 import os
 
+
 ###############################################################################
-# GLOBAL VARIABLES
+# CONFIGURE VARIABLES
 ###############################################################################
 # Folder name
 FOLDER_NAME = os.getcwd().split('\\')[-1]
 
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 # API urls
-SUN_API_URL = 'https://api.sunrise-sunset.org/json'
-VC_API_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/'
-AURORA_API_URL = 'http://api.auroras.live/v1/'
+SUN_API_URL = config['API']['SUN_API_URL']
+VC_API_URL = config['API']['VC_API_URL']
+AURORA_API_URL = config['API']['AURORA_API_URL']
