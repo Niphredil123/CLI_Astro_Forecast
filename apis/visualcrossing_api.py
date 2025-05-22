@@ -58,6 +58,7 @@ def lunar_api_call(lat: float,
         'include': 'days',
         'elements': 'datetime,moonphase,moonrise,moonset'
     }
+
     try:
         # Try to call Visual Crossing with the params and location/dat string
         response = requests.get(VC_API_URL + location_date,
@@ -120,6 +121,7 @@ def cloud_api_call(lat: float,
         'include': 'hours',
         'elements': 'datetime,cloudcover'
     }
+
     try:
         # Try to call Visual Crossing with the params and location/dat string
         response = requests.get(VC_API_URL + location_date, params=params,
