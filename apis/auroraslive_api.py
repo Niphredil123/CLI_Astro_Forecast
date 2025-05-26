@@ -9,7 +9,6 @@ Functions relating to the http://auroraslive.io API.
 import requests
 
 # Logging modules
-import logging
 from logger import logging_setup
 
 ###############################################################################
@@ -21,7 +20,7 @@ from config import AURORA_API_URL
 ###############################################################################
 # SETUP LOGGING
 ###############################################################################
-logging_setup()
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -48,7 +47,7 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         data: which data from the ace module should be returned 'threeday'
         and 'probability' will be used in this app.
     """
-    logging.info('Running aurora_api_call.')
+    logger.info('Running aurora_api_call.')
 
     params = {
         'type': 'ace',
@@ -63,18 +62,18 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         response.raise_for_status()
     except requests.exceptions.Timeout:
         # Raise and log an exception if the connection times out.
-        logging.exception(f'{AURORA_API_URL} timed out')
+        logger.exception(f'{AURORA_API_URL} timed out')
     except requests.exceptions.ConnectionError:
         # Raise and log an exception for a connection error.
-        logging.exception(f'Failed to connect to {AURORA_API_URL}')
+        logger.exception(f'Failed to connect to {AURORA_API_URL}')
     except requests.exceptions.HTTPError:
         # Raise and log an exception if the status code is for 4xx or 5xx errors
-        logging.exception(f'{AURORA_API_URL} gave an unsuccessful status code')
+        logger.exception(f'{AURORA_API_URL} gave an unsuccessful status code')
     except requests.exceptions.RequestException:
         # Raise and log all other request exceptions.
-        logging.exception(f'An error occurred calling {AURORA_API_URL}')
+        logger.exception(f'An error occurred calling {AURORA_API_URL}')
     else:
-        logging.debug(f'Aurora API response is: {response}')
+        logger.debug(f'Aurora API response is: {response}')
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:

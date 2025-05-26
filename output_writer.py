@@ -9,21 +9,20 @@ from datetime import datetime as dt
 from datetime import date
 
 # Logging modules
-import logging
 from logger import logging_setup
 
 
 ###############################################################################
 # VARIABLES
 ###############################################################################
-# define today
+# Define today
 today = date.today()
 
 
 ###############################################################################
 # SETUP LOGGING
 ###############################################################################
-logging_setup()
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -46,7 +45,7 @@ def forecast_output(dates: list,
             aurora probability and one with a three-day forecast.
 
     """
-    logging.info('Running forecast_output.')
+    logger.info('Running forecast_output.')
     if vc_forecasts is not None:
         lunar_forecast = vc_forecasts[0]
         cloud_forecast = vc_forecasts[1]

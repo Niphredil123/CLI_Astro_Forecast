@@ -11,7 +11,6 @@ from datetime import date
 import requests
 
 # Logging modules
-import logging
 from logger import logging_setup
 
 
@@ -24,7 +23,7 @@ from config import SUN_API_URL
 ###############################################################################
 # SETUP LOGGING
 ###############################################################################
-logging_setup()
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -38,7 +37,7 @@ def sun_api_call(lat: float, lng: float, day: date) -> dict | None:
     request. The API defaults to UTC time. For the purposes of this exercise,
     the timezone is set to Europe/London.
     """
-    logging.info('Running sun_api_call.')
+    logger.info('Running sun_api_call.')
 
     params = {
         'lat': lat,
@@ -52,18 +51,18 @@ def sun_api_call(lat: float, lng: float, day: date) -> dict | None:
         response.raise_for_status()
     except requests.exceptions.Timeout:
         # Raise and log an exception if the connection times out.
-        logging.exception(f'{SUN_API_URL} timed out')
+        logger.exception(f'{SUN_API_URL} timed out')
     except requests.exceptions.ConnectionError:
         # Raise and log an exception for a connection error.
-        logging.exception(f'Failed to connect to {SUN_API_URL}')
+        logger.exception(f'Failed to connect to {SUN_API_URL}')
     except requests.exceptions.HTTPError:
         # Raise and log an exception if the status code is for 4xx or 5xx errors
-        logging.exception(f'{SUN_API_URL} gave an unsuccessful status code')
+        logger.exception(f'{SUN_API_URL} gave an unsuccessful status code')
     except requests.exceptions.RequestException:
         # Raise and log all other request exceptions.
-        logging.exception(f'An error occurred calling {SUN_API_URL}')
+        logger.exception(f'An error occurred calling {SUN_API_URL}')
     else:
-        logging.debug(f'Sun API response is: {response}')
+        logger.debug(f'Sun API response is: {response}')
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:

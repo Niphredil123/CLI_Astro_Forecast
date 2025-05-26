@@ -8,15 +8,13 @@ This file contains functions to collect user inputs.
 from utils.message_utils import api_key_how_to
 
 # Logging modules
-import logging
 from logger import logging_setup
 
 
 ###############################################################################
 # SETUP LOGGING
 ###############################################################################
-logging_setup()
-
+logger = logging_setup(__name__)
 
 ###############################################################################
 # COLLECTING USER INPUT
@@ -32,15 +30,15 @@ def collect_length() -> int:
             forecast_length = int(
                 input('Would you like a 1, 2, or 3 day forecast? [1][2][3] '))
         except ValueError:
-            logging.warning('User input invalid forecast length')
+            logger.warning('User input invalid forecast length')
             print('Please enter 1, 2, or 3 aas numerals.')
             continue
         if 1 <= forecast_length <= 3:
             break
-        logging.warning('User input invalid forecast length')
+        logger.warning('User input invalid forecast length')
         print('Please enter a number between 1 and 3')
         continue
-    logging.debug(f'Collected forecast length: {forecast_length}')
+    logger.debug(f'Collected forecast length: {forecast_length}')
     return forecast_length
 
 
@@ -55,15 +53,15 @@ def collect_lat() -> float:
                 input('Please enter your latitude or enter 53.334 '
                       'as a default: ').strip())
         except ValueError:
-            logging.warning('User input invalid latitude')
+            logger.warning('User input invalid latitude')
             print('Please enter your latitude as a decimal number.')
             continue
         if -90.0 <= user_lat <= 90.0:
             break
-        logging.warning('User input invalid latitude')
+        logger.warning('User input invalid latitude')
         print('Your latitude should be between -90.0 and 90.0.')
         continue
-    logging.debug(f'Collected user latitude: {user_lat}')
+    logger.debug(f'Collected user latitude: {user_lat}')
     return user_lat
 
 
@@ -78,15 +76,15 @@ def collect_lng() -> float:
                 input('Please enter your longitude or enter -1.783 as a'
                       ' default: ').strip())
         except ValueError:
-            logging.warning('User input invalid longitude')
+            logger.warning('User input invalid longitude')
             print('Please enter your longitude as a decimal number.')
             continue
         if -180.0 <= user_lng <= 180.0:
             break
-        logging.warning('User input invalid longitude')
+        logger.warning('User input invalid longitude')
         print('Your longitude should be between -180.0 and 180.0.')
         continue
-    logging.debug(f'Collected user longitude: {user_lng}')
+    logger.debug(f'Collected user longitude: {user_lng}')
     return user_lng
 
 
@@ -125,5 +123,5 @@ def collect_api_key():
         else:
             print('Please enter your API key or "xxx".')
             continue
-    logging.debug(f'Collected user API key: {API_key}')
+    logger.debug(f'Collected user API key: {API_key}')
     return API_key

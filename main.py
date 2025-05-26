@@ -13,7 +13,6 @@ It will write a stargazing forecast to a text file listing:
 # IMPORTS
 ###############################################################################
 # Logging modules
-import logging
 from logger import logging_setup
 
 # Function to print welcome message
@@ -43,7 +42,7 @@ from config import FOLDER_NAME
 ###############################################################################
 # SETUP LOGGING
 ###############################################################################
-logging_setup()
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -82,4 +81,4 @@ if output_success == 0:
 
 
 if __name__ == '__main__':
-    logging.info('App started')
+    logger.info('App started')
