@@ -2,7 +2,6 @@
 A series of functions to build each component of the forecast using the user
 provided data.
 """
-
 ###############################################################################
 # IMPORTS
 ###############################################################################
@@ -17,6 +16,15 @@ from apis.auroraslive_api import aurora_api_call
 # Utils are imported for datetime formatting and data transformation
 from utils.datetime_utils import convert_to_24hr, reformat_iso8601
 from utils.data_utils import find_how_cloudy, find_moon_phase
+
+# Logging modules
+from logger import logging_setup
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -41,6 +49,8 @@ def sun_forecast_build(dates: list, user_lat: float, user_lng: float) -> dict:
     Returns:
         dict: A nested dictionary keyed by date with sun event times.
     """
+    logger.info('Running sun_forecast_build.')
+
     sun_forecast = {}
     for day in dates:
         # Running sun_api_call function to get sun and twilight times
@@ -60,6 +70,7 @@ def sun_forecast_build(dates: list, user_lat: float, user_lng: float) -> dict:
         for key, time in forecast_times.items():
             # Convert times to 24-hour clock using convert_to_24hr function
             forecast_times[key] = convert_to_24hr(time)
+    logger.debug(f'sun_forecast is {sun_forecast}')
     return sun_forecast
 
 
@@ -94,6 +105,8 @@ def vc_forecast_build(vc_api_key: str,
         second dictionary is the cloud cover forecast keyed by date.
         None: in the case a user API key is not given, None is returned.
     """
+    logger.info('Running vc_forecast_build.')
+
     lunar_forecast = {}
     cloud_forecast = {}
     if vc_api_key != 'xxx':
@@ -118,6 +131,8 @@ def vc_forecast_build(vc_api_key: str,
                 # using the find_moon_phase function.
                 lunar_forecast[day_str]['moonphase'] = find_moon_phase(
                     lunar_forecast[day_str]['moonphase'])
+
+            logger.debug(f'lunar_forecast is: {lunar_forecast}')
             # Cloud and lunar have the same API key so cloud can remain in the
             # if statement
             # Running the cloud function with the user's location and for the
@@ -138,6 +153,7 @@ def vc_forecast_build(vc_api_key: str,
                 # Adding cloud cover information to the cloud_forecast
                 # dictionary with the date at the key.
                 cloud_forecast[day_str] = day
+            logger.debug(f'cloud_forecast is: {cloud_forecast}')
             return [lunar_forecast, cloud_forecast]
     return None
 
@@ -168,6 +184,8 @@ def aurora_forecast_build(dates: list,
         the likelihood of seeing the aurora that evening, while the second
         gives a three-day probability forecast.
     """
+    logger.info('Running aurora_forecast_build.')
+
     aurora_prob = {}
     aurora_3day = {}
     # Running the aurora_api_call function to call the API and receive the
@@ -179,6 +197,7 @@ def aurora_forecast_build(dates: list,
     aurora_prob['Probability'] = aurora_prob_api_response['value']
     aurora_prob['Colour'] = aurora_prob_api_response['colour']
 
+    logger.debug(f'aurora_prob is: {aurora_prob}')
     # Running the aurora_api_call function to call the API and receive the
     # three-day forecast data.
     aurora_3day_api_response = aurora_api_call(
@@ -206,4 +225,5 @@ def aurora_forecast_build(dates: list,
         # Dictionary comprehension for each day in aurora_3day_zip
         for date, periods in aurora_3day_zip.items()
     }
+    logger.debug(f'aurora_3day is: {aurora_3day}')
     return [aurora_prob, aurora_3day]

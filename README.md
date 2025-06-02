@@ -48,15 +48,17 @@ python3 main.py
 stargazer/
 ├── main.py                 # Orchestrates input, API calls, and output
 ├── config.py               # Constants and default settings
-├── messages.py             # Print functions for large messages
+├── example_config.ini      # Template config.ini file
 ├── input_handler.py        # User input collection and validation
 ├── forecast_builder.py     # Forecast logic (combines API responses)
+├── logger.py               # Logging setup file
 ├── output_writer.py        # Writes the forecast to file
 ├── apis/
 │   ├── auroraslive_api.py          # Aurora API call
 |   ├── sun_api.py                  # Solar API call
 │   └── visualcrossing_api.py       # Moon and cloud API call
 ├── utils/
+|   ├── message_utils.py                 # Print functions for large messages
 │   ├── data_utils.py               # Data transform utils
 │   └── datetime_utils.py           # Datetime utils
 ```

@@ -12,6 +12,9 @@ It will write a stargazing forecast to a text file listing:
 ###############################################################################
 # IMPORTS
 ###############################################################################
+# Logging modules
+from logger import logging_setup
+
 # Function to print welcome message
 from utils.message_utils import welcome_message
 
@@ -34,6 +37,12 @@ from output_writer import forecast_output
 # VARIABLES
 ###############################################################################
 from config import FOLDER_NAME
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -69,3 +78,7 @@ if output_success == 0:
     print(
         f'[SUCCESS!] file "Stargazing_Forecast.txt" has been saved '
         f'to the folder "{FOLDER_NAME}".')
+
+
+if __name__ == '__main__':
+    logger.info('App started')

@@ -8,11 +8,21 @@ This file contains the function to write the final forecast to a file.
 from datetime import datetime as dt
 from datetime import date
 
+# Logging modules
+from logger import logging_setup
+
+
 ###############################################################################
 # VARIABLES
 ###############################################################################
-# define today
+# Define today
 today = date.today()
+
+
+###############################################################################
+# SETUP LOGGING
+###############################################################################
+logger = logging_setup(__name__)
 
 
 ###############################################################################
@@ -35,6 +45,7 @@ def forecast_output(dates: list,
             aurora probability and one with a three-day forecast.
 
     """
+    logger.info('Running forecast_output.')
     if vc_forecasts is not None:
         lunar_forecast = vc_forecasts[0]
         cloud_forecast = vc_forecasts[1]
