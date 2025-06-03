@@ -8,7 +8,7 @@ WORKDIR /CLI_Astro_Forecast
 COPY requirements.txt .
 
 # Install dependencies for requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -qr requirements.txt
 
 # Copy code into container
 COPY app/ .
