@@ -12,9 +12,9 @@ It will write a stargazing forecast to a text file listing:
 - An aurora forecast.
 
 ## Installation
-After cloning the repo, one can either run the app locally or use Docker.
+After cloning the repo, one can either run the app locally via the CLI or use Docker.
 
-### CLI Usage
+### CLI
 1. Create and activate a virtual environment (optional, but recommended):
 
 ```bash
