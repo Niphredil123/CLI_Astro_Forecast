@@ -12,17 +12,22 @@ It will write a stargazing forecast to a text file listing:
 - An aurora forecast.
 
 ## Installation
-1. Clone the repo.
-2. Create and activate a virtual environment (optional, but recommended):
+After cloning the repo, one can either run the app locally or use Docker.
+
+### CLI Usage
+1. Create and activate a virtual environment (optional, but recommended):
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
-3. Install dependencies from requirements.txt
+2. Install dependencies from `requirements.txt`
 ```bash
 pip install -r requirements.txt
 ```
+### Docker
+One can use the included `Dockerfile` to create an image.  
+The `docker-compose.yml` file handles building the image and running the app. It includes a bind mount so that the `Stargazing_Forecast.txt` file is saved in the local `./app` folder on the host machine.
 
 ## Usage
 ### To run the app you will need:
@@ -31,36 +36,52 @@ pip install -r requirements.txt
 - Your longitude and latitude
 - A Visual Crossing API key (optional)
 
-### To run the app:
-1. Navigate to the project folder in the terminal
-2. Enter:
+### To run the app via the CLI:
+1. Navigate to the `./app` folder and ensure your virtual environment is activated.
+2. Run:
 ```bash
 python3 main.py
 ```
-3. You will be prompted to enter your:
-    - Visual Crossing API key (optional)
-    - Desired forecast length (1-3 days)
-    - Latitude and Longitude
-4. The app will call the web APIs and write a file `Stargazing_Forecast.txt` to the folder.
+3. When prompted, enter:
+    - Visual Crossing API key _(optional)_
+    - Desired forecast length _(1-3 days)_
+    - Latitude and longitude
+4. The app will call the web APIs and save a file `Stargazing_Forecast.txt` to the current folder.
+
+### To run the app in the using Docker:
+1. Navigate to the main project folder.
+2. Run:
+```bash
+docker-compose run app
+```
+3. When prompted, enter:
+    - Visual Crossing API key _(optional)_
+    - Desired forecast length _(1-3 days)_
+    - Latitude and longitude
+4. The app will call the web APIs and save a file `Stargazing_Forecast.txt` to the local `./app` folder on your machine.
 
 ## Project Folder Structure
 ```
 stargazer/
-├── main.py                 # Orchestrates input, API calls, and output
-├── config.py               # Constants and default settings
-├── example_config.ini      # Template config.ini file
-├── input_handler.py        # User input collection and validation
-├── forecast_builder.py     # Forecast logic (combines API responses)
-├── logger.py               # Logging setup file
-├── output_writer.py        # Writes the forecast to file
-├── apis/
-│   ├── auroraslive_api.py          # Aurora API call
-|   ├── sun_api.py                  # Solar API call
-│   └── visualcrossing_api.py       # Moon and cloud API call
-├── utils/
-|   ├── message_utils.py                 # Print functions for large messages
-│   ├── data_utils.py               # Data transform utils
-│   └── datetime_utils.py           # Datetime utils
+├──app
+|   ├── apis/
+|   │   ├── auroraslive_api.py          # Aurora API call
+|   |   ├── sun_api.py                  # Solar API call
+|   │   └── visualcrossing_api.py       # Moon and cloud API call
+|   ├── utils/
+|   │   ├── data_utils.py               # Data transform utils
+|   │   ├── datetime_utils.py           # Datetime utils
+|   |   └── message_utils.py            # Print functions for large messages
+|   ├── main.py                         # Orchestrates input, API calls, and output
+|   ├── config.py                       # Configurations read from config.ini
+|   ├── example_config.ini              # Template config.ini file
+|   ├── input_handler.py                # User input collection and validation
+|   ├── forecast_builder.py             # Forecast logic (combines API responses)
+|   ├── logger.py                       # Logging setup file
+|   ├── output_writer.py                # Writes the forecast to file
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
 ```
 
 ## APIs
