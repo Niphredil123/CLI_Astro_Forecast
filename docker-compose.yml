@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    stdin_open: true
+    tty: true
+    command: python3 ./main.py
+    volumes:
+      - ./app/Stargazing_Forecast.txt:/CLI_Astro_Forecast/Stargazing_Forecast.txt
