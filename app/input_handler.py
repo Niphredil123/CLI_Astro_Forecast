@@ -50,8 +50,7 @@ def collect_lat() -> float:
     while True:
         try:
             user_lat = float(
-                input('Please enter your latitude or enter 53.334 '
-                      'as a default: ').strip())
+                input('Please enter your latitude [-90 to 90]: ').strip())
         except ValueError:
             logger.warning('User input invalid latitude')
             print('Please enter your latitude as a decimal number.')
@@ -59,7 +58,7 @@ def collect_lat() -> float:
         if -90.0 <= user_lat <= 90.0:
             break
         logger.warning('User input invalid latitude')
-        print('Your latitude should be between -90.0 and 90.0.')
+        print('Your latitude should be between -90 and 90.')
         continue
     logger.debug(f'Collected user latitude: {user_lat}')
     return user_lat
@@ -73,8 +72,7 @@ def collect_lng() -> float:
     while True:
         try:
             user_lng = float(
-                input('Please enter your longitude or enter -1.783 as a'
-                      ' default: ').strip())
+                input('Please enter your longitude [-180 to 180]: ').strip())
         except ValueError:
             logger.warning('User input invalid longitude')
             print('Please enter your longitude as a decimal number.')
@@ -82,7 +80,7 @@ def collect_lng() -> float:
         if -180.0 <= user_lng <= 180.0:
             break
         logger.warning('User input invalid longitude')
-        print('Your longitude should be between -180.0 and 180.0.')
+        print('Your longitude should be between -180 and 180.')
         continue
     logger.debug(f'Collected user longitude: {user_lng}')
     return user_lng
