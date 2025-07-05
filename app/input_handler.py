@@ -6,6 +6,8 @@ This file contains functions to collect user inputs.
 ###############################################################################
 # Function that prints a how to message
 from utils.message_utils import api_key_how_to
+from utils.validation_utils import validate_length, validate_lat, validate_lng, \
+    validate_yes_no, validate_key
 
 # Logging modules
 from logger import logging_setup
@@ -26,18 +28,17 @@ def collect_length() -> int:
     """
     forecast_length = None
     while True:
+        user_input = input(
+            'Would you like a 1, 2, or 3 day forecast? [1][2][3] ')
         try:
-            forecast_length = int(
-                input('Would you like a 1, 2, or 3 day forecast? [1][2][3] '))
-        except ValueError:
-            logger.warning('User input invalid forecast length')
-            print('Please enter 1, 2, or 3 aas numerals.')
-            continue
-        if 1 <= forecast_length <= 3:
+            forecast_length = validate_length(user_input)
             break
-        logger.warning('User input invalid forecast length')
-        print('Please enter a number between 1 and 3')
-        continue
+        except ValueError as e:
+            if str(e) == "Not Int":
+                print("Please enter 1, 2, or 3 as numerals.")
+            else:
+                print("Please enter a number between 1 and 3")
+            continue
     logger.debug('Collected forecast length: %s', forecast_length)
     return forecast_length
 
@@ -48,18 +49,16 @@ def collect_lat() -> float:
     """
     user_lat = None
     while True:
+        user_input = input('Please enter your latitude [-90 to 90]: ')
         try:
-            user_lat = float(
-                input('Please enter your latitude [-90 to 90]: ').strip())
-        except ValueError:
-            logger.warning('User input invalid latitude')
-            print('Please enter your latitude as a decimal number.')
-            continue
-        if -90.0 <= user_lat <= 90.0:
+            user_lat = validate_lat(user_input)
             break
-        logger.warning('User input invalid latitude')
-        print('Your latitude should be between -90 and 90.')
-        continue
+        except ValueError as e:
+            if str(e) == 'Not float':
+                print('Please enter your latitude as a decimal number.')
+            else:
+                print('Your latitude should be between -90 and 90.')
+            continue
     logger.debug('Collected user latitude: %s', user_lat)
     return user_lat
 
@@ -70,38 +69,39 @@ def collect_lng() -> float:
     """
     user_lng = None
     while True:
+        user_input = input('Please enter your longitude [-180 to 180]: ')
         try:
-            user_lng = float(
-                input('Please enter your longitude [-180 to 180]: ').strip())
-        except ValueError:
-            logger.warning('User input invalid longitude')
-            print('Please enter your longitude as a decimal number.')
-            continue
-        if -180.0 <= user_lng <= 180.0:
+            user_lng = validate_lng(user_input)
             break
-        logger.warning('User input invalid longitude')
-        print('Your longitude should be between -180 and 180.')
-        continue
-    logger.debug('Collected user longitude: %s', user_lng)
+        except ValueError as e:
+            if str(e) == 'Not float':
+                print('Please enter your longitude as a decimal number.')
+            else:
+                print('Your longitude should be between -180 and 180.')
+            continue
+    logger.debug('Collected user latitude: %s', user_lng)
     return user_lng
 
 
-def api_key_instructions():
+def api_key_instructions() -> None:
     """
     Uses a while loop with try and except to ask the user if they would like
     instructions on how to set up a Visual Crossing API key.
     """
     while True:
-        visual_crossing_info = input(
+        user_input = input(
             'Would you like to know how to get an API key for Visual '
-            'Crossing? [YES][NO] ').strip()
-        if visual_crossing_info.lower() == 'yes':
-            api_key_how_to()
-            break
-        if visual_crossing_info.lower() == 'no':
-            break
-        print('Please input yes or no.')
-        continue
+            'Crossing? [YES][NO] ')
+        try:
+            visual_crossing_info = validate_yes_no(user_input)
+            if visual_crossing_info:
+                api_key_how_to()
+                break
+            if not visual_crossing_info:
+                break
+        except ValueError:
+            print('Please input yes or no.')
+            continue
 
 
 def collect_api_key():
@@ -110,14 +110,13 @@ def collect_api_key():
     """
     api_key = None
     while True:
-        api_key = input('Please enter your API key for visualcrossing.com\n'
+        user_input = input('Please enter your API key for visualcrossing.com\n'
                         'Enter "xxx" for no key but skip getting a lunar or '
-                        'cloud forecast: ').strip()
-        if api_key == 'xxx':
-            break
-        if len(api_key) == 25:
-            break
-        print('Please enter your API key or "xxx".')
-        continue
-    logger.debug('Collected user API key: %s', api_key)
-    return api_key
+                        'cloud forecast: ')
+        try:
+            api_key = validate_key(user_input)
+            logger.debug('Collected user API key: %s', api_key)
+            return api_key
+        except ValueError:
+            print('Please enter your API key or "xxx".')
+            continue
