@@ -62,18 +62,18 @@ def aurora_api_call(lat: float, lng: float, data: str) -> dict | None:
         response.raise_for_status()
     except requests.exceptions.Timeout:
         # Raise and log an exception if the connection times out.
-        logger.exception(f'{AURORA_API_URL} timed out')
+        logger.exception('%s timed out', AURORA_API_URL)
     except requests.exceptions.ConnectionError:
         # Raise and log an exception for a connection error.
-        logger.exception(f'Failed to connect to {AURORA_API_URL}')
+        logger.exception('Failed to connect to %s', AURORA_API_URL)
     except requests.exceptions.HTTPError:
         # Raise and log an exception if the status code is for 4xx or 5xx errors
-        logger.exception(f'{AURORA_API_URL} gave an unsuccessful status code')
+        logger.exception('%s gave an unsuccessful status code', AURORA_API_URL)
     except requests.exceptions.RequestException:
         # Raise and log all other request exceptions.
-        logger.exception(f'An error occurred calling {AURORA_API_URL}')
+        logger.exception('An error occurred calling %s', AURORA_API_URL)
     else:
-        logger.debug(f'Aurora API response is: {response}')
+        logger.debug('Aurora API response is: %s', response)
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:

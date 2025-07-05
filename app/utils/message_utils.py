@@ -5,6 +5,7 @@ Simple print functions with larger messages for the user.
 # FUNCTIONS
 ###############################################################################
 def welcome_message():
+    """Function to print welcome message."""
     print(
         '''
         ================================================================================
@@ -27,6 +28,7 @@ def welcome_message():
 
 
 def api_key_how_to():
+    """ Function prints message explaining how to get Visual Crossing API Key"""
     print(
         '''
         To register for an API Key with Visual Crossing:

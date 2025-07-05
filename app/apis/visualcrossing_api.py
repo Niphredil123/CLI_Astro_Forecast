@@ -65,22 +65,22 @@ def lunar_api_call(lat: float,
         response.raise_for_status()
     except requests.exceptions.Timeout:
         # Raise and log an exception if the connection times out.
-        logger.exception(f'{VC_API_URL} timed out')
+        logger.exception('%s timed out', VC_API_URL)
     except requests.exceptions.ConnectionError:
         # Raise and log an exception for a connection error.
-        logger.exception(f'Failed to connect to {VC_API_URL}')
+        logger.exception('Failed to connect to %s', VC_API_URL)
     except requests.exceptions.HTTPError:
         # Raise and log an exception if the status code is for 4xx or 5xx errors
-        logger.exception(f'{VC_API_URL} gave an unsuccessful status code')
+        logger.exception('%s gave an unsuccessful status code', VC_API_URL)
         # 401 is unauthorised request
         if response.status_code == 401:
             print('Your API key is invalid. You will not get a lunar or cloud'
                   'forecast.')
     except requests.exceptions.RequestException:
         # Raise and log all other request exceptions.
-        logger.exception(f'An error occurred calling {VC_API_URL}')
+        logger.exception('An error occurred calling %s', VC_API_URL)
     else:
-        logger.debug(f'Lunar API response is: {response}')
+        logger.debug('Lunar API response is: %s', response)
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:
@@ -128,22 +128,22 @@ def cloud_api_call(lat: float,
         response.raise_for_status()
     except requests.exceptions.Timeout:
         # Raise and log an exception if the connection times out.
-        logger.exception(f'{VC_API_URL} timed out')
+        logger.exception('%s timed out', VC_API_URL)
     except requests.exceptions.ConnectionError:
         # Raise and log an exception for a connection error.
-        logger.exception(f'Failed to connect to {VC_API_URL}')
+        logger.exception('Failed to connect to %s', VC_API_URL)
     except requests.exceptions.HTTPError:
         # Raise and log an exception if the status code is for 4xx or 5xx errors
-        logger.exception(f'{VC_API_URL} gave an unsuccessful status code')
+        logger.exception('%s gave an unsuccessful status code', VC_API_URL)
         # 401 is unauthorised request
         if response.status_code == 401:
             print('Your API key is invalid. You will not get a lunar or cloud'
                   'forecast.')
     except requests.exceptions.RequestException:
         # Raise and log all other request exceptions.
-        logger.exception(f'An error occurred calling {VC_API_URL}')
+        logger.exception('An error occurred calling %s', VC_API_URL)
     else:
-        logger.debug(f'Cloud API response is: {response}')
+        logger.debug('Cloud API response is: %s', response)
         # Checking request was successful by looking for status code 200 and
         # returning the API response in a JSON format
         if response.status_code == 200:

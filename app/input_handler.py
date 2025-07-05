@@ -38,7 +38,7 @@ def collect_length() -> int:
         logger.warning('User input invalid forecast length')
         print('Please enter a number between 1 and 3')
         continue
-    logger.debug(f'Collected forecast length: {forecast_length}')
+    logger.debug('Collected forecast length: %s', forecast_length)
     return forecast_length
 
 
@@ -60,7 +60,7 @@ def collect_lat() -> float:
         logger.warning('User input invalid latitude')
         print('Your latitude should be between -90 and 90.')
         continue
-    logger.debug(f'Collected user latitude: {user_lat}')
+    logger.debug('Collected user latitude: %s', user_lat)
     return user_lat
 
 
@@ -82,7 +82,7 @@ def collect_lng() -> float:
         logger.warning('User input invalid longitude')
         print('Your longitude should be between -180 and 180.')
         continue
-    logger.debug(f'Collected user longitude: {user_lng}')
+    logger.debug('Collected user longitude: %s', user_lng)
     return user_lng
 
 
@@ -98,28 +98,26 @@ def api_key_instructions():
         if visual_crossing_info.lower() == 'yes':
             api_key_how_to()
             break
-        elif visual_crossing_info.lower() == 'no':
+        if visual_crossing_info.lower() == 'no':
             break
-        else:
-            print('Please input yes or no.')
-            continue
+        print('Please input yes or no.')
+        continue
 
 
 def collect_api_key():
     """
     Uses a while loop to collect the user's Visual Crossing API key.
     """
-    API_key = None
+    api_key = None
     while True:
-        API_key = input('Please enter your API key for visualcrossing.com\n'
+        api_key = input('Please enter your API key for visualcrossing.com\n'
                         'Enter "xxx" for no key but skip getting a lunar or '
                         'cloud forecast: ').strip()
-        if API_key == 'xxx':
+        if api_key == 'xxx':
             break
-        elif len(API_key) == 25:
+        if len(api_key) == 25:
             break
-        else:
-            print('Please enter your API key or "xxx".')
-            continue
-    logger.debug(f'Collected user API key: {API_key}')
-    return API_key
+        print('Please enter your API key or "xxx".')
+        continue
+    logger.debug('Collected user API key: %s', api_key)
+    return api_key

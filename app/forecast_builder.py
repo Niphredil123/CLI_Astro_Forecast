@@ -70,7 +70,7 @@ def sun_forecast_build(dates: list, user_lat: float, user_lng: float) -> dict:
         for key, time in forecast_times.items():
             # Convert times to 24-hour clock using convert_to_24hr function
             forecast_times[key] = convert_to_24hr(time)
-    logger.debug(f'sun_forecast is {sun_forecast}')
+    logger.debug('sun_forecast is %s', sun_forecast)
     return sun_forecast
 
 
@@ -132,7 +132,7 @@ def vc_forecast_build(vc_api_key: str,
                 lunar_forecast[day_str]['moonphase'] = find_moon_phase(
                     lunar_forecast[day_str]['moonphase'])
 
-            logger.debug(f'lunar_forecast is: {lunar_forecast}')
+            logger.debug('lunar_forecast is: %s', lunar_forecast)
             # Cloud and lunar have the same API key so cloud can remain in the
             # if statement
             # Running the cloud function with the user's location and for the
@@ -153,7 +153,7 @@ def vc_forecast_build(vc_api_key: str,
                 # Adding cloud cover information to the cloud_forecast
                 # dictionary with the date at the key.
                 cloud_forecast[day_str] = day
-            logger.debug(f'cloud_forecast is: {cloud_forecast}')
+            logger.debug('cloud_forecast is: %s', cloud_forecast)
             return [lunar_forecast, cloud_forecast]
     return None
 
@@ -197,7 +197,7 @@ def aurora_forecast_build(dates: list,
     aurora_prob['Probability'] = aurora_prob_api_response['value']
     aurora_prob['Colour'] = aurora_prob_api_response['colour']
 
-    logger.debug(f'aurora_prob is: {aurora_prob}')
+    logger.debug('aurora_prob is: %s', aurora_prob)
     # Running the aurora_api_call function to call the API and receive the
     # three-day forecast data.
     aurora_3day_api_response = aurora_api_call(
@@ -225,5 +225,5 @@ def aurora_forecast_build(dates: list,
         # Dictionary comprehension for each day in aurora_3day_zip
         for date, periods in aurora_3day_zip.items()
     }
-    logger.debug(f'aurora_3day is: {aurora_3day}')
+    logger.debug('aurora_3day is: %s', aurora_3day)
     return [aurora_prob, aurora_3day]
