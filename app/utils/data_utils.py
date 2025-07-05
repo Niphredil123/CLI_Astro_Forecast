@@ -6,27 +6,26 @@ Functions relating to transforming data returned by the APIs
 ###############################################################################
 def find_moon_phase(value: float) -> str:
     """
-    Converts the numerical value of the moon phase provided by the API to a
-    descriptive phrase.
+    Converts the numerical value of the moon phase to a descriptive phrase
+    using a list of tuples. Each tuple contains a boolean lambda check and a
+    moon phase label.
     """
-    if value == 0.00:
-        return 'New moon'
-    if 0.00 < value < 0.25:
-        return 'Waxing crescent'
-    if value == 0.25:
-        return 'First quarter'
-    if 0.25 < value < 0.5:
-        return 'Waxing gibbous'
-    if value == 0.5:
-        return 'Full moon'
-    if 0.5 < value < 0.75:
-        return 'Waning gibbous'
-    if value == 0.75:
-        return 'Last quarter'
-    if 0.75 < value <= 1.0:
-        return 'Waning Crescent'
-    else:
-        return 'Moon phase out of scope'
+    conditions = [
+        (lambda v: v == 0.00, 'New moon'),
+        (lambda v: 0.00 < v < 0.25, 'Waxing crescent'),
+        (lambda v: v == 0.25, 'First quarter'),
+        (lambda v: 0.25 < v < 0.5, 'Waxing gibbous'),
+        (lambda v: v == 0.5, 'Full moon'),
+        (lambda v: 0.5 < v < 0.75, 'Waning gibbous'),
+        (lambda v: v == 0.75, 'Last quarter'),
+        (lambda v: 0.75 < v <= 1.0, 'Waning Crescent'),
+    ]
+
+    for check, label in conditions:
+        if check(value):
+            return label
+
+    return 'Moon phase not found'
 
 
 def find_how_cloudy(cloud_cover: float) -> str:
@@ -36,7 +35,6 @@ def find_how_cloudy(cloud_cover: float) -> str:
     """
     if 0.0 <= cloud_cover < 10.0:
         return 'There are very few clouds. Perfect for for stargazing!'
-    elif 10.0 <= cloud_cover < 30.0:
+    if 10.0 <= cloud_cover < 30.0:
         return 'There are some clouds, so only moderately good stargazing.'
-    else:
-        return 'It is too cloudy for good stargazing.'
+    return 'It is too cloudy for good stargazing.'
