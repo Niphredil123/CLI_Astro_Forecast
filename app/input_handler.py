@@ -6,7 +6,8 @@ This file contains functions to collect user inputs.
 ###############################################################################
 # Function that prints a how to message
 from utils.message_utils import api_key_how_to
-from utils.validation_utils import validate_length, validate_lat, validate_lng, validate_yes_no, validate_key
+from utils.validation_utils import validate_length, validate_lat, validate_lng, \
+    validate_yes_no, validate_key
 
 # Logging modules
 from logger import logging_setup
