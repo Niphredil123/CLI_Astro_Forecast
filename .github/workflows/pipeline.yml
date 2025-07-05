@@ -36,7 +36,6 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: build
     strategy:
       matrix:
         # Using only one version to test matrix, but limit run time
@@ -56,5 +55,7 @@ jobs:
           pip install pylint
 
       - name: Analysing the code with pylint
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           pylint $(git ls-files '*.py')
