@@ -1,3 +1,7 @@
+"""
+This module contains key configuration variables, parsing some from the
+config.ini file.
+"""
 ###############################################################################
 # IMPORTS
 ###############################################################################
@@ -8,7 +12,7 @@ import os
 ###############################################################################
 # CONFIGURE VARIABLES
 ###############################################################################
-# Reading Config info from config.inial
+# Reading Config info from config.ini
 config = configparser.ConfigParser()
 config.read('config.ini')
 

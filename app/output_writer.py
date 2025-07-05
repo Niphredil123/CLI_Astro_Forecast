@@ -52,7 +52,7 @@ def forecast_output(dates: list,
 
     aurora_prob = aurora_forecast[0]
     aurora_3day = aurora_forecast[1]
-    with open('Stargazing_Forecast.txt', 'w') as textfile:
+    with open('Stargazing_Forecast.txt', 'w', encoding="utf-8") as textfile:
         # Loop through each day in dates.
         for days in dates:
             # Formatting the day as a string, to be used as a dict key
@@ -60,12 +60,12 @@ def forecast_output(dates: list,
             textfile.write('FORECAST FOR ' + day_str + '\n\n')
             textfile.write('SUN AND TWILIGHT\n')
             for key, value in sun_forecast[day_str].items():
-                textfile.write('%s: %s\n' % (key, value))
+                textfile.write(f'{key}: {value}\n')
             # Check if and API key was given and write to file if it was
             if vc_forecasts is not None:
                 textfile.write('\n\nLUNAR\n')
                 for key, value in lunar_forecast[day_str].items():
-                    textfile.write('%s: %s\n' % (key, value))
+                    textfile.write(f'{key}: {value}\n')
                 textfile.write('\n\nCLOUDS\n')
                 # Selecting the cloud_forecast entries needed
                 textfile.write(cloud_forecast[day_str]['cloudforecast'] + '\n')
@@ -87,9 +87,9 @@ def forecast_output(dates: list,
                 # Writing only the last two entries of the current day's
                 # aurora forecast to limit it to nighttime.
                 for key, value in aurora_3day[days][-2].items():
-                    textfile.write('%s: %s\n' % (key, value))
+                    textfile.write(f'{key}: {value}\n')
                 for key, value in aurora_3day[days][-1].items():
-                    textfile.write('%s: %s\n' % (key, value))
+                    textfile.write(f'{key}: {value}\n')
             textfile.write(
                 '\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
                 '~~~~~~~~~~~~~~~~\n\n')

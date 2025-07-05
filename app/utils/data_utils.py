@@ -11,19 +11,19 @@ def find_moon_phase(value: float) -> str:
     """
     if value == 0.00:
         return 'New moon'
-    elif 0.00 < value < 0.25:
+    if 0.00 < value < 0.25:
         return 'Waxing crescent'
-    elif value == 0.25:
+    if value == 0.25:
         return 'First quarter'
-    elif 0.25 < value < 0.5:
+    if 0.25 < value < 0.5:
         return 'Waxing gibbous'
-    elif value == 0.5:
+    if value == 0.5:
         return 'Full moon'
-    elif 0.5 < value < 0.75:
+    if 0.5 < value < 0.75:
         return 'Waning gibbous'
-    elif value == 0.75:
+    if value == 0.75:
         return 'Last quarter'
-    elif 0.75 < value <= 1.0:
+    if 0.75 < value <= 1.0:
         return 'Waning Crescent'
     else:
         return 'Moon phase out of scope'

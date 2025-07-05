@@ -15,13 +15,12 @@ It will write a stargazing forecast to a text file listing:
 # Logging modules
 from logger import logging_setup
 
-# Function to print welcome message
-from utils.message_utils import welcome_message
-
 # User input functions
 from input_handler import api_key_instructions, collect_length
 from input_handler import collect_api_key, collect_lat, collect_lng
 
+# Function to print welcome message
+from utils.message_utils import welcome_message
 # Functions to create a list of dates
 from utils.datetime_utils import get_forecast_dates
 
@@ -69,12 +68,12 @@ vc_forecasts = vc_forecast_build(vc_api_key, dates, user_lat, user_lng)
 aurora_forecast = aurora_forecast_build(dates, user_lat, user_lng)
 
 # Write forecast file
-output_success = forecast_output(dates,
+OUTPUT_SUCCESS = forecast_output(dates,
                                  sun_forecast,
                                  vc_forecasts,
                                  aurora_forecast)
 
-if output_success == 0:
+if OUTPUT_SUCCESS == 0:
     print(
         f'[SUCCESS!] file "Stargazing_Forecast.txt" has been saved '
         f'to the folder "{FOLDER_NAME}".')
