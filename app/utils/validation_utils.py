@@ -28,11 +28,11 @@ def validate_length(value: str) -> int:
         forecast_length = int(value.strip())
     except ValueError as e:
         logger.warning('User input invalid forecast length: not int')
-        raise ValueError("Not Int") from e
+        raise ValueError('Not Int') from e
     if 1 <= forecast_length <= 3:
         return forecast_length
     logger.warning('User input invalid forecast length: out of range')
-    raise ValueError("Out of forecast range")
+    raise ValueError('Out of forecast range')
 
 
 def validate_lat(value: str) -> float:
@@ -45,7 +45,7 @@ def validate_lat(value: str) -> float:
     if -90.0 <= user_lat <= 90.0:
         return user_lat
     logger.warning('User input invalid latitude: out of range')
-    raise ValueError("Invalid latitude")
+    raise ValueError('Invalid latitude')
 
 
 def validate_lng(value: str) -> float:
@@ -58,17 +58,17 @@ def validate_lng(value: str) -> float:
     if -180.0 <= user_lng <= 180.0:
         return user_lng
     logger.warning('User input invalid longitude: out of range')
-    raise ValueError("Invalid longitude")
+    raise ValueError('Invalid longitude')
 
 
 def validate_yes_no(value: str) -> bool:
     """Check if user input is yes or no."""
     yes_no = value.strip().lower()
-    if yes_no in ("yes", "y"):
+    if yes_no in ('yes', 'y'):
         return True
-    if yes_no in ("no", "n"):
+    if yes_no in ('no', 'n'):
         return False
-    raise ValueError("Invalid input")
+    raise ValueError('Invalid input')
 
 
 def validate_key(value: str) -> str:
@@ -82,4 +82,4 @@ def validate_key(value: str) -> str:
         return api_key.lower()
     if len(api_key) == 25:
         return api_key
-    raise ValueError("Invalid input")
+    raise ValueError('Invalid input')
