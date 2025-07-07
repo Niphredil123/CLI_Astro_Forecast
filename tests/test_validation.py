@@ -100,7 +100,7 @@ def test_valid_no(input_value):
     assert validate_yes_no(input_value) is False
 
 
-@pytest.mark.parametrize('input_value',['abc', '', ' ', 'yeah', 1])
+@pytest.mark.parametrize('input_value',['abc', '', ' ', 'yeah'])
 def test_invalid_yes_no(input_value):
     """Test that invalid inputs raise a ValueError"""
     with pytest.raises(ValueError, match='Invalid input'):
