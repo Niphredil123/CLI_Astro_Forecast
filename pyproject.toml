@@ -1,2 +1,6 @@
 [tool.pylint.main]
 source-roots = "./app"
+
+[tool.pytest.ini_options]
+pythonpath = ["app"]
+testpaths = ["tests"]
