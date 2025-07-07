@@ -129,7 +129,7 @@ def test_valid_api_key(input_value, expected_output):
     ' ',
     '1aaaa2aaaa3aaaa',
     ])
-def test_invalid_yes_no(input_value):
+def test_invalid_api_key(input_value):
     """Test that invalid inputs raise a ValueError"""
     with pytest.raises(ValueError, match='Invalid input'):
         validate_key(input_value)

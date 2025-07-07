@@ -18,12 +18,12 @@ from logging.handlers import RotatingFileHandler
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-#Load variable from
+# Load config info from config.ini
+MAX_SIZE = int(config.get('logging', 'log_max_size', fallback='30000'))
+BACKUP_COUNT = int(config.get('logging', 'log_backup_count', fallback='3'))
 log_folder = config.get('logging', 'log_folder', fallback='logs')
 log_file = config.get('logging', 'log_file', fallback='.log')
 log_level = config.get('logging', 'log_level'.upper(), fallback='DEBUG')
-max_size = int(config.get('logging', 'log_max_size', fallback='30000'))
-backup_count = int(config.get('logging', 'log_backup_count', fallback='3'))
 log_format = config.get('logging', 'log_format', fallback='%%(asctime)s - %%(name)s')
 
 # Check logging folder exists
@@ -47,8 +47,8 @@ def logging_setup(name: str):
         logger.setLevel(getattr(logging, log_level, logging.INFO))
 
         # Setting up file handler to rotate through logs
-        file_handler =RotatingFileHandler(log_path, maxBytes=max_size,
-                                        backupCount=backup_count)
+        file_handler =RotatingFileHandler(log_path, maxBytes=MAX_SIZE,
+                                        backupCount=BACKUP_COUNT)
 
         # Setting log format and applying to file handler
         file_handler.setFormatter(logging.Formatter(log_format))
