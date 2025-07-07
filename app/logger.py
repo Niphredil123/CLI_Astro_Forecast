@@ -19,12 +19,12 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 #Load variable from
-log_folder = config['logging']['log_folder']
-log_file = config['logging']['log_file']
-log_level = config['logging']['log_level'].upper()
-max_size = int(config['logging']['log_max_size'])
-backup_count = int(config['logging']['log_backup_count'])
-log_format = config['logging']['log_format']
+log_folder = config.get('logging', 'log_folder', fallback='logs')
+log_file = config.get('logging', 'log_file', fallback='.log')
+log_level = config.get('logging', 'log_level'.upper(), fallback='DEBUG')
+max_size = int(config.get('logging', 'log_max_size', fallback='30000'))
+backup_count = int(config.get('logging', 'log_backup_count', fallback='3'))
+log_format = config.get('logging', 'log_format', fallback='%%(asctime)s - %%(name)s')
 
 # Check logging folder exists
 log_path = os.path.join(log_folder, log_file)
